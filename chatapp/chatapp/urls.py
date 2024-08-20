@@ -22,5 +22,6 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.main_view, name='main'),
+    path('', views.main_view, name='main-view'),
+    path('input.css', views.serve_css, name='serve-css'),
 ]
