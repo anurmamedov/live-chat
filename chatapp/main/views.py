@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from pathlib import Path
+
 
 def main_view(request):
     return render(request, 'main.html', {})
@@ -15,3 +16,10 @@ def serve_css(request):
 def Check_Username(request):
    print("1")
    return
+
+def my_view(request):
+    print('1')
+    data = {
+        'message': 'Hello from the Krasnovodsk!'
+    }
+    return JsonResponse(data)

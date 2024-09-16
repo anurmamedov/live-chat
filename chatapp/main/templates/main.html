@@ -209,15 +209,17 @@
       submitButton.addEventListener("click", function(){
       console.log(username.value)  
 
-        const fetchUrl ='http://localhost:8000/check-username/'
+        const fetchUrl ='http://localhost:8000/check/username'
         fetch(fetchUrl)
         .then(response => response.json())
-        .then(data => e())
-        .catch(error => d());
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error =>{
+          console.error('Error:', error);
+        } );
       }); 
 
-
     })
-
   </script>
 </html>
