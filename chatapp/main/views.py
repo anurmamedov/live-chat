@@ -13,13 +13,8 @@ def serve_css(request):
         return HttpResponse(f.read(), content_type='text/css')
     
 
-def Check_Username(request):
-   print("1")
-   return
-
-def my_view(request):
-    print('1')
-    data = {
-        'message': 'Hello from the Krasnovodsk!'
-    }
-    return JsonResponse(data)
+def check_username(request):
+    username = request.POST.get('input-username')
+    return JsonResponse({
+        'key': username
+    })
