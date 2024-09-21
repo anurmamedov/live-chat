@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from pathlib import Path
-
+from .models import MyUser
 
 def main_view(request):
     return render(request, 'main.html', {})
@@ -14,7 +14,12 @@ def serve_css(request):
     
 
 def check_username(request):
-    username = request.POST.get('input-username')
+    get_username = request.POST.get('input-username')
+    if MyUser.objects.filter(username=get_username).exists():
+        return JsonResponse({
+            'user_exists': True 
+        })
     return JsonResponse({
-        'key': username
+        'user_exists': False
     })
+    

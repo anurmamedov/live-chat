@@ -8,3 +8,5 @@ class MyUser(models.Model):
     username = models.TextField(max_length=20)
     avatar = models.ImageField(upload_to='avatars/', default='avatars/default.png')
 
+    def __str__(self):
+        return self.username
