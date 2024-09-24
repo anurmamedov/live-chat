@@ -210,7 +210,7 @@
       submitButton.addEventListener("click", function(){
       const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
  
-      
+
         const fetchUrl ='http://127.0.0.1:8000/check/username'
         fetch(fetchUrl,
           {
@@ -225,13 +225,19 @@
         )
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          checkStatus(data);
         })
         .catch(error =>{
           console.error('Error:', error);
         } );
+        function checkStatus(data){
+          if (data['user_already_exists']== true){
+            alert('user already exists!')
+          } else{
+            // 
+          }
+        }
       }); 
-
     })
   </script>
 </html>

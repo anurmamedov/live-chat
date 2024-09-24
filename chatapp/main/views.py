@@ -17,9 +17,11 @@ def check_username(request):
     get_username = request.POST.get('input-username')
     if MyUser.objects.filter(username=get_username).exists():
         return JsonResponse({
-            'user_exists': True 
+            'user_already_exists': True 
         })
-    return JsonResponse({
-        'user_exists': False
-    })
-    
+    else:
+        MyUser.objects.create(username=get_username)
+        return JsonResponse({
+            'user_created': True,
+            'user_already_exists': False
+        })
