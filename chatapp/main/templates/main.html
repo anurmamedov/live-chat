@@ -179,6 +179,8 @@
       <div class="py-5">
       <input
         class="w-full bg-gray-300 py-5 px-3 rounded-xl"
+        id="message-input-field"
+        hidden="true"
         type="text" 
         placeholder="type your message here..."/>
     </div>
@@ -232,10 +234,16 @@
         } );
         function checkStatus(data){
           if (data['user_already_exists']== true){
-            alert('user already exists!')
+            alert('User already exists!')
           } else{
-            // 
+            enableMessageInputField()
           }
+        }
+        function enableMessageInputField(){
+          messageInputField = document.getElementById('message-input-field')
+          console.log(messageInputField)
+          messageInputField.removeAttribute('hidden')
+          console.log(messageInputField)
         }
       }); 
     })
