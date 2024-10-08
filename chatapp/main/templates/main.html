@@ -26,8 +26,8 @@
   </div><div> 
   </div>
   <div id="active-user" class="flex items-center space-x-1">
-    <div>
-      Rafaello Fellini
+    <div id="user-name">
+      <!-- Username -->
     </div>
   </div>
     <div>
@@ -243,9 +243,10 @@
         } );
         function checkStatus(data){
           if (data['user_already_exists']== true){
-            disableMessageInputField()
+            disableMessageInputField();
           } else{
-            enableMessageInputField()
+            enableActiveUserField(username.value);
+            enableMessageInputField();
           }
         }
         usernameNotification = document.getElementById('username-notification')
@@ -267,6 +268,27 @@
           usernameNotification.textContent = 'This username is already taken! Try different one.'
           usernameNotification.classList.remove('text-green-500')
           usernameNotification.classList.add('text-red-500')
+        }
+
+        function enableActiveUserField(loggedInUserName){
+          console.log(loggedInUserName)
+          // const activeUserField = document.getElementById('active-user');
+          const userNameField = document.getElementById('user-name');
+          userNameField.textContent = loggedInUserName
+
+          // if (activeUserField && userNameField) {
+          //   console.log('Logged-in username:', loggedInUserName);
+          //   if (loggedInUserName) {
+          //     userNameField.textContent  = loggedInUserName;
+          //   } else {
+          //     console.log("Logged-in username is empty or undefined");
+          //   }
+          //   activeUserField.classList.remove('hidden');
+          //   console.log('Active user is enabled and updated to:', loggedInUserName);
+            
+          // } else {
+          //   console.log('Element not found');
+          // }
         }
       }); 
     })
