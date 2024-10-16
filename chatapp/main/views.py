@@ -3,9 +3,10 @@ from django.http import HttpResponse, JsonResponse
 from pathlib import Path
 from .models import MyUser
 
+
 def main_view(request):
-    print(MyUser.objects.all())
-    return render(request, 'main.html', {})
+    users = MyUser.objects.all()
+    return render(request, 'main.html', {'users': users})
 
 
 def serve_css(request):
