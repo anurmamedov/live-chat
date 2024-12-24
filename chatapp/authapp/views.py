@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
+
 
 def signup_view(request):
     if request.method == 'POST':
@@ -15,5 +17,14 @@ def signup_view(request):
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
-    # redirect_authenticated_user = True  # Redirect users who are already logged in
-    extra_context = {'page_title': 'Login'}
+    redirect_authenticated_user = True
+    
+    def get_success_url(self):
+        return reverse_lazy('main-view') 
+    
+    
+class CustomLogoutView(LogoutView):
+    template_name = 'login.html'
+    # def get_redirect_url(self):
+    #     return reverse_lazy('authapp:login')    
+    

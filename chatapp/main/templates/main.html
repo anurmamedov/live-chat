@@ -23,7 +23,14 @@
       class="rounded-2xl bg-gray-100 py-3 px-5 w-full"
     />
   <!-- current div is  to move next div to right -->
-  </div><div> 
+  </div>
+  <form action="{% url 'authapp:logout' %}" method="post">
+    {% csrf_token %}
+    
+    <button type="submit">Logout</button>
+  </form>
+
+  <div> 
   </div>
   <div id="active-user" class="flex items-center space-x-1">
     <div id="user-name">
