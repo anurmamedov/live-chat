@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from pathlib import Path
-from .models import MyUser
+from django.contrib.auth.models import User
 
 
 def main_view(request):
-    users = MyUser.objects.all()
+    users = User.objects.all()
     return render(request, 'main.html', {'users': users})
 
 
