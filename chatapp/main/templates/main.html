@@ -13,7 +13,10 @@
 <div class="container mx-auto shadow-lg rounded-lg">
     <!-- headaer -->
 <div class="px-5 py-5 flex justify-between items-center bg-white border-b-2">
+
+
   <div class="font-semibold text-2xl">LiveChat App</div>
+  
   <div class="w-1/2">
     <input
       type="text"
@@ -23,29 +26,34 @@
       class="rounded-2xl bg-gray-100 py-3 px-5 w-full"
     />
   <!-- current div is  to move next div to right -->
+   
   </div>
-  <form action="{% url 'authapp:logout' %}" method="post">
-    {% csrf_token %}
-    
-    <button type="submit">Logout</button>
-  </form>
-  <div>
-  {{ user.username }}
-  </div>
-  <div> 
-  </div>
-  <div id="active-user" class="flex items-center space-x-1">
-    <div id="user-name">
-      <!-- Username -->
+  <div id="active-user" class="flex items-center space-x-2">
+    <!-- Avatar -->
+    <div id="user-avatar" class="mr-2">
+      <img
+        src="https://avatar.iran.liara.run/public/8"
+        class="object-cover h-12 w-12 rounded-full"
+        alt="{{ user.username }}"
+      />
+    </div>
+  
+    <!-- Username -->
+    <div id="#" class="text-gray-700 font-medium ml-1">
+      {{ user.username }}
     </div>
   </div>
-    <div>
-      <img id="active-user-avatar" hidden
-      src=""  
-      class="object-cover h-12 w-12 rounded-full"
-      alt=""
-    />
+
+    <div class="flex justify-end mb-4">
+      <form action="{% url 'authapp:logout' %}" method="post">
+        {% csrf_token %}
+        
+        <button type="submit" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-400 dark:focus:ring-red-700">
+          Logout
+        </button>
+      </form>
     </div>
+
 </div>
 <!-- end header -->
 <!-- Chatting -->
@@ -60,7 +68,7 @@
     >
       <div class="w-1/4">
         <img
-          src="{{ user.avatar.url }}"
+          src="https://avatar.iran.liara.run/public/8"
           class="object-cover h-12 w-12 rounded-full"
           alt="{{ user.username }}"
         />
@@ -106,11 +114,12 @@
       <div class="py-5 px-4">
         <div class="flex flex-col">
           <input
-          class="w-full bg-gray-300 py-5 px-3 rounded-xl"
+          class="w-full text-sm font-medium text-gray-600 bg-gray-50 rounded-xl border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:outline-none dark:bg-gray-300 dark:border-gray-300 dark:placeholder-gray-300 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 py-5 px-3"
           id="message-input-field"
           type="text" 
           placeholder="type your message here..."/>
-\          <!-- send button -->
+          
+          <!-- send button -->
           <div class="flex justify-end mt-3">
             <button type="button" class="bg-[rgb(59_130_246)] text-white hover:bg-[rgb(37,99,235)] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
               Send
