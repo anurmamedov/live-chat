@@ -103,12 +103,20 @@
         </div>
       </div>
     </div>
-      <div class="py-5">
-      <input
-        class="w-full bg-gray-300 py-5 px-3 rounded-xl"
-        id="message-input-field"
-        type="text" 
-        placeholder="type your message here..."/>
+      <div class="py-5 px-4">
+        <div class="flex flex-col">
+          <input
+          class="w-full bg-gray-300 py-5 px-3 rounded-xl"
+          id="message-input-field"
+          type="text" 
+          placeholder="type your message here..."/>
+\          <!-- send button -->
+          <div class="flex justify-end mt-3">
+            <button type="button" class="bg-[rgb(59_130_246)] text-white hover:bg-[rgb(37,99,235)] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              Send
+            </button>
+          </div>
+        </div>
     </div>
     <meta name="csrf-token" content="{{ csrf_token }}">
   </div>
