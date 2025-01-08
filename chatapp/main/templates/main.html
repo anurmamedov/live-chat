@@ -39,7 +39,7 @@
     </div>
   
     <!-- Username -->
-    <div id="#" class="text-gray-700 font-medium ml-1">
+    <div id="authuser" class="text-gray-700 font-medium ml-1">
       {{ user.username }}
     </div>
   </div>
@@ -47,7 +47,6 @@
     <div class="flex justify-end mb-4">
       <form action="{% url 'authapp:logout' %}" method="post">
         {% csrf_token %}
-        
         <button type="submit" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-400 dark:focus:ring-red-700">
           Logout
         </button>
@@ -121,25 +120,29 @@
           
           <!-- send button -->
           <div class="flex justify-end mt-3">
-            <button type="button" class="bg-[rgb(59_130_246)] text-white hover:bg-[rgb(37,99,235)] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            <button id="send-message" type="button" class="bg-[rgb(59_130_246)] text-white hover:bg-[rgb(37,99,235)] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
               Send
             </button>
           </div>
         </div>
     </div>
-    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token }}">
   </div>
 </div>
 </div>
   </body>
   <script>
-    document.addEventListener("DOMContentLoaded",function(){
-      username = document.getElementById("username_input");
-      submitButton = document.getElementById("submit_button");
-      submitButton.addEventListener("click", function(){
-      const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
- 
-        const fetchUrl ='http://127.0.0.1:8000/check/username'
+      document.addEventListener("DOMContentLoaded",function(){
+
+        username = document.getElementById("authuser").textContent
+        send_message_button = document.getElementById("send-message")
+        send_message_button.addEventListener("click", function(){
+          content = document.getElementById("message-input-field").value
+          document.getElementById("message-input-field").value = ""
+          csrftoken = document.getElementById('csrf-token').content
+
+
+          const fetchUrl ='http://127.0.0.1:8000/messages/send'
         fetch(fetchUrl,
           {
             method: 'POST',
@@ -148,30 +151,17 @@
               'X-CSRFToken': csrftoken,
             },
             body: new URLSearchParams({
-              'input-username': username.value})
+              'username': username,
+              'content': content,
+            })
           }
         )
         .then(response => response.json())
-        .then(data => {
-          checkStatus(data);
-        })
+        .then(data => {})
         .catch(error =>{
           console.error('Error:', error);
-        } );
-
-        usernameNotification = document.getElementById('username-notification')
-        console.log(usernameNotification)
-
-        function enableActiveUserField(loggedInUserName){
-          console.log(loggedInUserName)
-          // const activeUserField = document.getElementById('active-user');
-          const userNameField = document.getElementById('user-name');
-          const userImageField = document.getElementById('active-user-avatar');
-          userNameField.textContent = loggedInUserName 
-          userImageField.src = 'media/avatars/default.png'
-          userImageField.removeAttribute('hidden')
-        }
-      }); 
+        });
+        })
     })
   </script>
 </html>

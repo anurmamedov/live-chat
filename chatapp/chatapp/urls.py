@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main_view, name='main-view'),
     path('output.css', views.serve_css, name='serve-css'),
-    path('check/', include('main.urls')),
+    path('messages/', include('main.urls')),
     path('auth/', include('authapp.urls')),
 ]
 
