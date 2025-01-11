@@ -3,7 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from pathlib import Path
 from django.contrib.auth.models import User
 from .models import Message
-
+import json
+from django.http import JsonResponse, HttpResponseBadRequest
 
 
 def main_view(request):
@@ -12,8 +13,19 @@ def main_view(request):
 
 
 def send_message(request):
-    user = User.objects.get(username='aykos')
-    Message.objects.create(sender=user, content='goodnight')
+    print(request)
+    body = json.loads(request.body)
+    print(body)
+    print(body['username'])
+    print(body['content'])
+    username = body['username']
+    content = body['content']
+    # # print(username) 
+    # # print(content) 
+    user = User.objects.get(username=username)
+    # print(user)
+    new_message = Message.objects.create(sender=user, content=content)
+    new_message.save()
     return render(request, 'main.html')
 
 
