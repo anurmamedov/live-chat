@@ -10,7 +10,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 def main_view(request):
     users = User.objects.all()
-    return render(request, 'main.html', {'users': users})
+    all_messages = Message.objects.all()
+    return render(request, 'main.html', {
+        'users': users,
+        'messages': all_messages,
+    })
 
 @csrf_exempt
 def send_message(request):
@@ -37,28 +41,6 @@ def send_message(request):
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
     return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
-
-
-    # print(request)
-    # body = json.loads(request.body)
-    # print(body)
-    # print(body['username'])
-    # print(body['content'])
-    # username = body['username']
-    # content = body['content']
-    # # # print(username) 
-    # # # print(content) 
-    # # user = User.objects.get(username=username)
-    # try:
-    #     user = User.objects.get(username=username)
-    # except User.DoesNotExist:
-    #     return JsonResponse({'error': 'User does not exist'}, status=404)
-    # print("Username received:", username)
-    # # print(user)
-    # new_message = Message.objects.create(sender=user, content=content)
-    # new_message.save()
-    # return render(request, 'main.html', {'user': request.user, 'users': User.objects.all()})
-    
 
 
 def serve_css(request):
