@@ -85,26 +85,27 @@
   </div>
   <div class="w-full px-5 flex flex-col justify-between">
     <div class="flex flex-col mt-5">
+
       <div>
        {% for message in messages %} 
-        <div class="
-        {% if message.sender.username == user.username %} flex justify-end mb-4
-        {% else %}
-        flex justify-start mb-4
-        {% endif %}">
-        
-          <div class="
-          {% if message.sender.username == user.username %} mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white
-          {% else %}
-          ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white
-          {% endif %}">
-
+        {% if message.sender.username == user.username %}
+        <div class="flex justify-end mb-4">
+          <div class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
             {{ message.content }}
           </div>
           <img src="https://avatar.iran.liara.run/public/2" class="object-cover h-8 w-8 rounded-full" alt=""/>
         </div>
-        {% endfor %}
+        {% else %}
+        <div class="flex justify-start mb-4">
+          <img src="https://avatar.iran.liara.run/public/8" class="object-cover h-8 w-8 rounded-full" alt=""/>
+          <div class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
+            {{ message.content }}
+          </div>
+        </div>
+        {% endif %}
+       {% endfor %}
       </div>
+      
     </div>
       <div class="py-5 px-4">
         <div class="flex flex-col">
@@ -131,11 +132,13 @@
 
         username = document.getElementById("authuser").textContent
         send_message_button = document.getElementById("send-message")
+        
+
+        // send message function
         send_message_button.addEventListener("click", function(){
           content = document.getElementById("message-input-field").value
           document.getElementById("message-input-field").value = ""
           csrftoken = document.getElementById('csrf-token').content
-
 
           const fetchUrl ='http://127.0.0.1:8000/messages/send'
           const data = {
@@ -143,7 +146,6 @@
              'content': content, 
           };
         fetch(fetchUrl,
-        
           {
             method: 'POST',
             headers: {
@@ -151,15 +153,32 @@
               'X-CSRFToken': csrftoken,
             },
             body: JSON.stringify(data)
-
           }
         )
         .then(response => response.json())
-        .then(data => {})
+        .then(data => displayMessages())
         .catch(error =>{
           console.error('Error:', error);
         });
         })
+        // end of send message function
+        
+        // setInterval(displayMessages, 2000)
+        function displayMessages(){
+          fetch('http://127.0.0.1:8000/messages/display',
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error =>{
+          console.error('Error:', error);
+        });
+        }
     })
   </script>
 </html>

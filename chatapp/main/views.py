@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from pathlib import Path
 from django.contrib.auth.models import User
 from .models import Message
+from django.core.serializers import serialize
 import json
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
@@ -16,6 +17,14 @@ def main_view(request):
         'messages': all_messages,
     })
 
+def display_messages(request):
+    print(1)
+    all_messages = Message.objects.all()
+    json_data = serialize('json', all_messages)
+    print(json_data)
+    return JsonResponse({'data': json_data}, status=200)
+
+
 @csrf_exempt
 def send_message(request):
     if request.method == "POST":
@@ -23,9 +32,6 @@ def send_message(request):
             body = json.loads(request.body)
             username = body.get('username', '').strip()
             content = body.get('content', '').strip()
-            print(username)
-            print(content)
-
             if not username or not content:
                 return JsonResponse({'error': 'Invalid data'}, status=400)
 
