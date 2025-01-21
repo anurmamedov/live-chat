@@ -32,11 +32,15 @@
   <div id="active-user" class="flex items-center space-x-2">
     <!-- Avatar -->
     <div id="user-avatar" class="mr-2">
-      <img
-        src="https://avatar.iran.liara.run/public/8"
+      {% if user.profile.avatar %}
+        <img
+        src="{{ user.profile.avatar.url }}"
         class="object-cover h-12 w-12 rounded-full"
         alt="{{ user.username }}"
       />
+      {% else %}
+        <img src="/static/default-avatar.jpg" class="object-cover h-12 w-12 rounded-full" alt="Default Avatar" />
+      {% endif %}
     </div>
   
     <!-- Username -->
@@ -87,24 +91,32 @@
     <div class="flex flex-col mt-5">
 
       <div>
-       {% for message in messages %} 
+      <!-- Chat Messages -->
+      {% for message in messages %}
         {% if message.sender.username == user.username %}
-        <div class="flex justify-end mb-4">
-          <div class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
-            {{ message.content }}
+          <div class="flex justify-end mb-4">
+            <div class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+              {{ message.content }}
+            </div>
+            {% if message.sender.profile.avatar %}
+              <img src="{{ message.sender.profile.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
+            {% else %}
+              <img src="/static/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
+            {% endif %}
           </div>
-          <img src="https://avatar.iran.liara.run/public/2" class="object-cover h-8 w-8 rounded-full" alt=""/>
-        </div>
         {% else %}
-        <div class="flex justify-start mb-4">
-          <img src="https://avatar.iran.liara.run/public/8" class="object-cover h-8 w-8 rounded-full" alt=""/>
-          <div class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
-            {{ message.content }}
+          <div class="flex justify-start mb-4">
+            {% if message.sender.profile.avatar %}
+              <img src="{{ message.sender.profile.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
+            {% else %}
+              <img src="/static/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
+            {% endif %}
+            <div class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
+              {{ message.content }}
+            </div>
           </div>
-        </div>
         {% endif %}
-       {% endfor %}
-      </div>
+      {% endfor %}
       
     </div>
       <div class="py-5 px-4">
