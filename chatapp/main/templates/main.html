@@ -39,7 +39,7 @@
         alt="{{ user.username }}"
       />
       {% else %}
-        <img src="/static/default-avatar.jpg" class="object-cover h-12 w-12 rounded-full" alt="Default Avatar" />
+        <img src="/media/avatars/default-avatar.jpg" class="object-cover h-12 w-12 rounded-full" alt="Default Avatar" />
       {% endif %}
     </div>
   
@@ -90,7 +90,7 @@
   <div class="w-full px-5 flex flex-col justify-between">
     <div class="flex flex-col mt-5">
 
-      <div>
+      <div id="displayedMessages">
       <!-- Chat Messages -->
       {% for message in messages %}
         {% if message.sender.username == user.username %}
@@ -101,7 +101,7 @@
             {% if message.sender.profile.avatar %}
               <img src="{{ message.sender.profile.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
             {% else %}
-              <img src="/static/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
+              <img src="/media/avatars/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
             {% endif %}
           </div>
         {% else %}
@@ -109,7 +109,7 @@
             {% if message.sender.profile.avatar %}
               <img src="{{ message.sender.profile.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
             {% else %}
-              <img src="/static/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
+              <img src="/media/avatars/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
             {% endif %}
             <div class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
               {{ message.content }}
@@ -186,10 +186,21 @@
           }
         )
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => showMessages(data))
         .catch(error =>{
           console.error('Error:', error);
         });
+        }
+        function showMessages(data){
+          document.getElementById('displayedMessages').innerHTML = ''
+          // console.log(data['data'][4])
+          for (i = 0; i < data['data'].length ; i++ ){
+            console.log(data['data'][i])
+            p = document.createElement('p')
+            p.innerHTML = data['data'][i]['content']
+            document.getElementById('displayedMessages').appendChild(p)
+          }
+          console.log(document.getElementById('displayedMessages'))
         }
     })
   </script>

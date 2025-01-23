@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main',
     'authapp',
     'corsheaders',
+    'chatapp',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -66,7 +67,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'chatapp.urls'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 TEMPLATES = [
     {
@@ -86,6 +88,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chatapp.wsgi.application'
 
+AUTH_USER_MODEL = 'main.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

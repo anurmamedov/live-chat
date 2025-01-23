@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-from main.models import Profile
+from main.models import CustomUser
 
 
 class SignUpForm(UserCreationForm):
@@ -25,7 +25,7 @@ class UserRegistrationForm(forms.ModelForm):
             user.set_password(self.cleaned_data["password"])
             user.save()
             # Create a Profile for the user (including avatar if provided)
-            profile = Profile.objects.create(user=user)
+            profile = CustomUser.objects.create(user=user)
             if 'avatar' in self.cleaned_data:
                 profile.avatar = self.cleaned_data['avatar']
                 profile.save()

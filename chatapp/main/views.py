@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from pathlib import Path
-from django.contrib.auth.models import User
+from main.models import CustomUser
 from .models import Message
 from django.core.serializers import serialize
 import json
@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def main_view(request):
-    users = User.objects.all()
+    users = CustomUser.objects.all()
     all_messages = Message.objects.all()
     return render(request, 'main.html', {
         'users': users,
@@ -37,8 +37,8 @@ def send_message(request):
                 return JsonResponse({'error': 'Invalid data'}, status=400)
 
             try:
-                user = User.objects.get(username=username)
-            except User.DoesNotExist:
+                user = CustomUser.objects.get(username=username)
+            except CustomUser.DoesNotExist:
                 return JsonResponse({'error': 'User does not exist'}, status=404)
 
             new_message = Message.objects.create(sender=user, content=content)

@@ -1,24 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 
 
+class CustomUser(AbstractUser):
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, default='avatars/default-avatar.jpg')
 
-# Create your models here.
+    def __str__(self):
+        return self.username
+
 
 class Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'senders')
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = 'senders')
     content = models.TextField(max_length=250)
     date = models.DateTimeField(default=now)
 
 
     def __str__(self):
-       return self.sender.username + " : " + self.content
+       return f"{self.sender.username} : {self.content}"
     
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.user.username}'s Profile"
