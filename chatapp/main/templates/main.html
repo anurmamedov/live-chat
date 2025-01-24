@@ -88,7 +88,7 @@
     </div>
   </div>
   <div class="w-full px-5 flex flex-col justify-between">
-    <div class="flex flex-col mt-5">
+    <div id="mainMessageField" class="flex flex-col mt-5">
 
       <div id="displayedMessages">
       <!-- Chat Messages -->
@@ -115,10 +115,28 @@
               {{ message.content }}
             </div>
           </div>
+
         {% endif %}
       {% endfor %}
-      
     </div>
+
+    
+    <!-- sample message field start -->
+    <div id="sampleDisplayedMessages" hidden="True">
+      <!-- Chat Messages -->
+          <div class="flex justify-end mb-4">
+            <div id="sdmContent" class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+              lorem gibson
+            </div>
+              <img src="#" class="object-cover h-8 w-8 rounded-full" alt="#" />
+          </div>
+    </div>
+    <!-- sample message field end -->
+
+
+
+
+
       <div class="py-5 px-4">
         <div class="flex flex-col">
           <input
@@ -175,7 +193,6 @@
         })
         // end of send message function
         
-        // setInterval(displayMessages, 2000)
         function displayMessages(){
           fetch('http://127.0.0.1:8000/messages/display',
           {
@@ -195,13 +212,25 @@
           document.getElementById('displayedMessages').innerHTML = ''
           // console.log(data['data'][4])
           for (i = 0; i < data['data'].length ; i++ ){
-            console.log(data['data'][i])
-            p = document.createElement('p')
-            p.innerHTML = data['data'][i]['content']
-            document.getElementById('displayedMessages').appendChild(p)
+            sampleDisplayedMessages = document.getElementById('sampleDisplayedMessages')
+            messagesDiv = sampleDisplayedMessages.cloneNode(true);
+            document.getElementById('sdmContent').innerHTML = data['data'][i]['content']
+            messagesDiv.setAttribute("hidden", false)
+
+            document.getElementById('mainMessageField').appendChild(messagesDiv)
+            // console.log(document.getElementById('mainMessageField'))
+            
+
+
+
+
+            // p = document.createElement('p')
+            // p.innerHTML = data['data'][i]['content']
+            // document.getElementById('displayedMessages').appendChild(p)
           }
-          console.log(document.getElementById('displayedMessages'))
+
         }
+          // setInterval(displayMessages, 2000)
     })
   </script>
 </html>
