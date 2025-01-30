@@ -120,17 +120,15 @@
       {% endfor %}
     </div>
 
+
+
     
     <!-- sample message field start -->
-    <div id="sampleDisplayedMessages" hidden="True">
-      <!-- Chat Messages -->
-          <div class="flex justify-end mb-4">
-            <div id="sdmContent" class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
-              lorem gibson
+          <div id="sampleDisplayedMessages" class="flex justify-end mb-4" style="display:none;">
+            <div class="sdmContent mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
             </div>
               <img src="#" class="object-cover h-8 w-8 rounded-full" alt="#" />
           </div>
-    </div>
     <!-- sample message field end -->
 
 
@@ -210,27 +208,15 @@
         }
         function showMessages(data){
           document.getElementById('displayedMessages').innerHTML = ''
-          // console.log(data['data'][4])
           for (i = 0; i < data['data'].length ; i++ ){
             sampleDisplayedMessages = document.getElementById('sampleDisplayedMessages')
             messagesDiv = sampleDisplayedMessages.cloneNode(true);
-            document.getElementById('sdmContent').innerHTML = data['data'][i]['content']
-            messagesDiv.setAttribute("hidden", false)
-
-            document.getElementById('mainMessageField').appendChild(messagesDiv)
-            // console.log(document.getElementById('mainMessageField'))
-            
-
-
-
-
-            // p = document.createElement('p')
-            // p.innerHTML = data['data'][i]['content']
-            // document.getElementById('displayedMessages').appendChild(p)
+            messagesDiv.querySelector('.sdmContent').innerHTML = data['data'][i]['content']
+            messagesDiv.style.display = 'flex'
+            document.getElementById('displayedMessages').appendChild(messagesDiv)
           }
-
         }
-          // setInterval(displayMessages, 2000)
+          setInterval(displayMessages, 2000)
     })
   </script>
 </html>

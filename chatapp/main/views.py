@@ -18,11 +18,8 @@ def main_view(request):
     })
 
 def display_messages(request):
-    print(1)
-    # all_messages = Message.objects.values('sender', 'content', 'date')
     all_messages = Message.objects.select_related('sender').values('sender__username', 'content', 'date')
     all_messages_list = list(all_messages)
-    print(all_messages_list)
     return JsonResponse({'data': all_messages_list}, status=200)
 
 
@@ -35,18 +32,14 @@ def send_message(request):
             content = body.get('content', '').strip()
             if not username or not content:
                 return JsonResponse({'error': 'Invalid data'}, status=400)
-
             try:
                 user = CustomUser.objects.get(username=username)
             except CustomUser.DoesNotExist:
                 return JsonResponse({'error': 'User does not exist'}, status=404)
-
             new_message = Message.objects.create(sender=user, content=content)
             return JsonResponse({'success': True, 'message': 'Message sent'}, status=200)
-
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
-
     return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
 
 
