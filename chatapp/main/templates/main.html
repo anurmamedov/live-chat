@@ -44,7 +44,7 @@
     </div>
   
     <!-- Username -->
-    <div id="authuser" class="text-gray-700 font-medium ml-1">
+    <div id="authuser" class="{{user.username}} text-gray-700 font-medium ml-1">
       {{ user.username }}
     </div>
   </div>
@@ -121,8 +121,6 @@
     </div>
 
 
-
-    
     <!-- sample message field start -->
           <div id="sampleDisplayedMessages" class="flex justify-end mb-4" style="display:none;">
             <div class="sdmContent mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
@@ -130,8 +128,6 @@
               <img src="#" class="object-cover h-8 w-8 rounded-full" alt="#" />
           </div>
     <!-- sample message field end -->
-
-
 
 
 
@@ -157,10 +153,8 @@
   </body>
   <script>
       document.addEventListener("DOMContentLoaded",function(){
-
         username = document.getElementById("authuser").textContent
         send_message_button = document.getElementById("send-message")
-        
 
         // send message function
         send_message_button.addEventListener("click", function(){
@@ -213,10 +207,28 @@
             messagesDiv = sampleDisplayedMessages.cloneNode(true);
             messagesDiv.querySelector('.sdmContent').innerHTML = data['data'][i]['content']
             messagesDiv.style.display = 'flex'
+            // console.log(username)
+            // console.log(data['data'][i]['sender__username'])
+
+            if (document.getElementById("authuser").classList[0] != data['data'][i]['sender__username']){
+              messagesDiv.classList.remove('justify-end')
+              messagesDiv.classList.add('justify-start')
+              messagesDiv.querySelector('.sdmContent').classList.remove('bg-blue-400')
+              messagesDiv.querySelector('.sdmContent').classList.add('bg-gray-400')
+              messagesDiv.querySelector('.sdmContent').classList.remove('mr-2')
+              messagesDiv.querySelector('.sdmContent').classList.add('ml-2')
+              // messagesDiv.classList.remove('justify-end')
+              // messagesDiv.classList.add('justify-start')
+
+
+            }
+
+
+
             document.getElementById('displayedMessages').appendChild(messagesDiv)
           }
         }
-          setInterval(displayMessages, 2000)
+          setInterval(displayMessages, 10000)
     })
   </script>
 </html>
