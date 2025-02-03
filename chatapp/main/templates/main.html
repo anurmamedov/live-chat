@@ -213,22 +213,35 @@
             if (document.getElementById("authuser").classList[0] != data['data'][i]['sender__username']){
               messagesDiv.classList.remove('justify-end')
               messagesDiv.classList.add('justify-start')
-              messagesDiv.querySelector('.sdmContent').classList.remove('bg-blue-400')
-              messagesDiv.querySelector('.sdmContent').classList.add('bg-gray-400')
-              messagesDiv.querySelector('.sdmContent').classList.remove('mr-2')
-              messagesDiv.querySelector('.sdmContent').classList.add('ml-2')
-              // messagesDiv.classList.remove('justify-end')
-              // messagesDiv.classList.add('justify-start')
-
-
+            }
+            else {
+              messagesDiv.classList.add('justify-end')
+              messagesDiv.classList.remove('justify-start')
             }
 
+            if (document.getElementById("authuser").classList[0] != data['data'][i]['sender__username']){
+              messagesDiv.querySelector('.sdmContent').classList.remove('bg-blue-400')
+              messagesDiv.querySelector('.sdmContent').classList.add('bg-gray-400')
+            }
+            else {
+              messagesDiv.querySelector('.sdmContent').classList.add('bg-blue-400')
+              messagesDiv.querySelector('.sdmContent').classList.remove('bg-gray-400')
+            }
+
+            if (document.getElementById("authuser").classList[0] != data['data'][i]['sender__username']){
+              messagesDiv.querySelector('.sdmContent').classList.remove('mr-2')
+              messagesDiv.querySelector('.sdmContent').classList.add('ml-2')
+            }
+            else {
+              messagesDiv.querySelector('.sdmContent').classList.add('mr-2')
+              messagesDiv.querySelector('.sdmContent').classList.remove('ml-2')
+            }
 
 
             document.getElementById('displayedMessages').appendChild(messagesDiv)
           }
         }
-          setInterval(displayMessages, 10000)
+          setInterval(displayMessages, 5000)
     })
   </script>
 </html>
