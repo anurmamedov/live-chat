@@ -32,15 +32,11 @@
   <div id="active-user" class="flex items-center space-x-2">
     <!-- Avatar -->
     <div id="user-avatar" class="mr-2">
-      {% if user.profile.avatar %}
         <img
-        src="{{ user.profile.avatar.url }}"
+        src="{{ user.avatar.url }}"
         class="object-cover h-12 w-12 rounded-full"
         alt="{{ user.username }}"
       />
-      {% else %}
-        <img src="/media/avatars/default-avatar.jpg" class="object-cover h-12 w-12 rounded-full" alt="Default Avatar" />
-      {% endif %}
     </div>
   
     <!-- Username -->
@@ -125,7 +121,7 @@
           <div id="sampleDisplayedMessages" class="flex justify-end mb-4" style="display:none;">
             <div class="sdmContent mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
             </div>
-              <img src="#" class="object-cover h-8 w-8 rounded-full" alt="#" />
+          <img src="#" class="sender-avatar object-cover h-8 w-8 rounded-full" alt="#" />
           </div>
     <!-- sample message field end -->
 
@@ -207,8 +203,8 @@
             messagesDiv = sampleDisplayedMessages.cloneNode(true);
             messagesDiv.querySelector('.sdmContent').innerHTML = data['data'][i]['content']
             messagesDiv.style.display = 'flex'
-            // console.log(username)
-            // console.log(data['data'][i]['sender__username'])
+            messagesDiv.querySelector('.sender-avatar').src = '/media/' + data['data'][i]['sender__avatar']
+
 
             if (document.getElementById("authuser").classList[0] != data['data'][i]['sender__username']){
               messagesDiv.classList.remove('justify-end')
@@ -241,7 +237,7 @@
             document.getElementById('displayedMessages').appendChild(messagesDiv)
           }
         }
-          setInterval(displayMessages, 5000)
+          setInterval(displayMessages, 3000)
     })
   </script>
 </html>
