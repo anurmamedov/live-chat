@@ -1,18 +1,24 @@
 from django.shortcuts import render, redirect
-from .forms import SignUpForm
+from .forms import RegisterForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.contrib.auth import login
 
 
 def signup_view(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
+    if request.method == "POST":
+        form = RegisterForm(request.POST, request.FILES)  # Handle files properly
         if form.is_valid():
-            form.save()
-            return redirect('authapp:login')  # Redirect to a login or success page
+            user = form.save(commit=False)
+            if 'avatar' in request.FILES:
+                user.avatar = request.FILES['avatar']
+            user.save()
+            login(request, user)
+            return redirect('main.html')  # Change 'home' to your actual home view
     else:
-        form = SignUpForm()
-    return render(request, 'register.html', {'form': form})
+        form = RegisterForm()
+    
+    return render(request, "register.html", {"form": form})
 
 
 class CustomLoginView(LoginView):

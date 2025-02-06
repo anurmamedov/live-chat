@@ -20,7 +20,6 @@ def main_view(request):
 def display_messages(request):
     all_messages = Message.objects.select_related('sender').values('sender__username', 'content', 'date', 'sender__avatar')
     all_messages_list = list(all_messages)
-    # print(all_messages_list['sender__avatar'])
     return JsonResponse({'data': all_messages_list}, status=200)
 
 

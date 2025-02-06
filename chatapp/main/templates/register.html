@@ -7,8 +7,6 @@
     {{ form.as_p }}
 
     <!-- Add a file input for the avatar -->
-    <label for="id_avatar">Avatar</label>
-    <input type="file" name="avatar" accept="image/*" class="form-control" id="id_avatar">
     <button type="submit" class="btn btn-primary">Register</button>
   </form>
   <p>Already have an account? <a href="{% url 'authapp:login' %}">Login here</a>.</p>

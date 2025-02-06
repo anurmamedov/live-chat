@@ -1,32 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from main.models import CustomUser
 
 
-class SignUpForm(UserCreationForm):
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    avatar = forms.ImageField(required=False)  # Optional upload
+
     class Meta:
-        model = get_user_model()
+        model = CustomUser
         fields = ['username', 'email', 'password1', 'password2', 'avatar']
-
-
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-    avatar = forms.ImageField(required=False)  # Avatar field
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password']
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.set_password(self.cleaned_data["password"])
-            user.save()
-            # Create a Profile for the user (including avatar if provided)
-            profile = CustomUser.objects.create(user=user)
-            if 'avatar' in self.cleaned_data:
-                profile.avatar = self.cleaned_data['avatar']
-                profile.save()
-        return user
