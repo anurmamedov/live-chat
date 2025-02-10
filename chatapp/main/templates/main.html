@@ -68,7 +68,7 @@
     >
       <div class="w-1/4">
         <img
-          src="https://avatar.iran.liara.run/public/8"
+          src="{{ user.avatar.url }}"
           class="object-cover h-12 w-12 rounded-full"
           alt="{{ user.username }}"
         />
@@ -94,19 +94,11 @@
             <div class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
               {{ message.content }}
             </div>
-            {% if message.sender.profile.avatar %}
-              <img src="{{ message.sender.profile.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
-            {% else %}
-              <img src="/media/avatars/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
-            {% endif %}
+              <img src="{{ message.sender.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
           </div>
         {% else %}
           <div class="flex justify-start mb-4">
-            {% if message.sender.profile.avatar %}
-              <img src="{{ message.sender.profile.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
-            {% else %}
-              <img src="/media/avatars/default-avatar.jpg" class="object-cover h-8 w-8 rounded-full" alt="Default Avatar" />
-            {% endif %}
+              <img src="{{ message.sender.avatar.url }}" class="object-cover h-8 w-8 rounded-full" alt="{{ message.sender.username }}" />
             <div class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
               {{ message.content }}
             </div>
@@ -201,6 +193,7 @@
           for (i = 0; i < data['data'].length ; i++ ){
             sampleDisplayedMessages = document.getElementById('sampleDisplayedMessages')
             messagesDiv = sampleDisplayedMessages.cloneNode(true);
+            console.log(messagesDiv)
             messagesDiv.querySelector('.sdmContent').innerHTML = data['data'][i]['content']
             messagesDiv.style.display = 'flex'
             messagesDiv.querySelector('.sender-avatar').src = '/media/' + data['data'][i]['sender__avatar']
@@ -227,13 +220,24 @@
             if (document.getElementById("authuser").classList[0] != data['data'][i]['sender__username']){
               messagesDiv.querySelector('.sdmContent').classList.remove('mr-2')
               messagesDiv.querySelector('.sdmContent').classList.add('ml-2')
+
+              
+              
+              messagesDiv.insertBefore(messagesDiv.querySelector('.sender-avatar'), messagesDiv.querySelector('.sdmContent'));
+
+
             }
             else {
               messagesDiv.querySelector('.sdmContent').classList.add('mr-2')
               messagesDiv.querySelector('.sdmContent').classList.remove('ml-2')
+              messagesDiv.insertBefore(messagesDiv.querySelector('.sdmContent'), messagesDiv.querySelector('.sender-avatar'));
             }
 
+            
 
+
+            messagesDiv.id = data['data'][i]['pk']
+            // console.log(data['data'][i]['pk'])
             document.getElementById('displayedMessages').appendChild(messagesDiv)
           }
         }
