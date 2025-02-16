@@ -5,7 +5,8 @@
       <div class="text-center mb-12">
         <p>LiveChat</p>
       </div>
-      <form>
+      <form method="POST" action="{% url 'authapp:register' %}" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="space-y-3">
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Username</label>

@@ -1,19 +1,19 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from main.models import CustomUser
+from django.contrib.auth.models import User
 
 
-class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    avatar = forms.ImageField(required=False)  # Optional upload
+class CustomUserCreationForm(forms.ModelForm):
+    password1 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+    avatar = forms.ImageField(required=False)  # Optional avatar field
 
     class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'password1', 'password2', 'avatar']
+        model = User
+        fields = ['username', 'email']
 
-
-    def clean_avatar(self):
-        avatar = self.cleaned_data.get('avatar')
-        if avatar and avatar.size > 5 * 1024 * 1024:  # Limit file size to 5MB
-            raise forms.ValidationError("Avatar file size should not exceed 5MB.")
-        return avatar
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
