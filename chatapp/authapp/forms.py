@@ -10,3 +10,10 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'password1', 'password2', 'avatar']
+
+
+    def clean_avatar(self):
+        avatar = self.cleaned_data.get('avatar')
+        if avatar and avatar.size > 5 * 1024 * 1024:  # Limit file size to 5MB
+            raise forms.ValidationError("Avatar file size should not exceed 5MB.")
+        return avatar
