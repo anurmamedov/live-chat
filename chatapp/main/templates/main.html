@@ -27,24 +27,17 @@
       class="rounded-2xl bg-gray-100 py-3 px-5 w-full"
     />
   <!-- current div is  to move next div to right -->
-   
-  </div>
-  <div id="active-user" class="flex items-center space-x-2">
-    <!-- Avatar -->
-    <div id="user-avatar" class="mr-2">
-        <img
-        src="{{ user.avatar.url }}"
-        class="object-cover h-12 w-12 rounded-full"
-        alt="{{ user.username }}"
-      />
-    </div>
-  
-    <!-- Username -->
-    <div id="authuser" class="{{user.username}} text-gray-700 font-medium ml-1">
-      {{ user.username }}
-    </div>
   </div>
 
+  <!-- <div id="authuser" class="{{user.username}} text-sm text-gray-700 font-medium ml-2 hidden md:block">
+    {{ user.username }}
+  </div>
+  <div id="active-user" class="items-center space-x-2 mx-4 hidden md:block">
+       <div id="user-avatar">
+          <img src="{{ user.avatar.url }}" class="object-cover h-12 w-12 rounded-full" alt="{{ user.username }}"/>
+      </div>
+    </div> -->
+    
     <div class="flex justify-end mb-4">
       <form action="{% url 'authapp:logout' %}" method="post">
         {% csrf_token %}
@@ -85,6 +78,9 @@
   </div>
   <div class="w-full px-5 flex flex-col justify-between">
     <div id="mainMessageField" class="flex flex-col mt-5">
+      <div id="authuser" class="{{user.username}} text-sm text-gray-700 font-medium ml-auto mr-2 mb-2">
+        {{ user.username }}
+      </div>
 
       <div id="displayedMessages">
       <!-- Chat Messages -->
