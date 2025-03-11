@@ -219,8 +219,8 @@
             }
 
             if (document.getElementById("authuser").classList[0] != data['data'][i]['sender__username']){
-              messagesDiv.querySelector('.sdmContent').classList.remove('bg-blue-400')
-              messagesDiv.querySelector('.sdmContent').classList.add('bg-gray-400')
+              messagesDiv.querySelector('.sdmContent').classList.remove('bg-blue-400','rounded-bl-3xl', 'rounded-tl-3xl', 'rounded-tr-xl')
+              messagesDiv.querySelector('.sdmContent').classList.add('bg-gray-400', 'rounded-br-3xl', 'rounded-tr-3xl', 'rounded-tl-xl')
             }
             else {
               messagesDiv.querySelector('.sdmContent').classList.add('bg-blue-400')
